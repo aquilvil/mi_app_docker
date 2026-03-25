@@ -1,0 +1,18 @@
+version: '3.8'  # Versión del esquema de Docker Compose
+
+services:       # Sección principal: define los contenedores
+  web:          # Nombre del servicio
+    image: nginx:latest   # Imagen de Docker a usar
+    ports:
+      - "8080:80"         # Mapeo de puertos: host:contenedor
+    volumes:
+      - ./html:/usr/share/nginx/html  # Mapeo de volúmenes
+    depends_on:
+      - app               # Este servicio depende de "app"
+
+  app:
+    build: ./app          # Construye desde el Dockerfile ubicado en ./app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
